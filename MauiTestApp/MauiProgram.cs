@@ -18,9 +18,10 @@ public static class MauiProgram
 			});
 
 		builder.Services.AddSingleton<NoteItem>();
-		builder .Services.AddTransient<NotePage>();
+		builder.Services.AddTransient<MainPage>();
+		builder.Services.AddTransient<NotePage>();
 
-		builder.Services.AddSingleton<TestDatabase>();
+        builder.Services.AddSingleton<TestDatabase>();
 
 #if DEBUG
 		builder.Logging.AddDebug();
