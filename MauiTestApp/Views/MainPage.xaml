@@ -2,14 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiTestApp.MainPage"
-             xmlns:models="clr-namespace:MauiTestApp.Models">
+             xmlns:model="clr-namespace:MauiTestApp.Models"
+             xmlns:viewmodel="clr-namespace:MauiTestApp.ViewModels"
+             x:DataType="viewmodel:NoteViewModel">
     <Grid RowDefinitions="*,Auto">
         <CollectionView 
                   VerticalOptions="Fill"
                   ItemsSource="{Binding Notes}"
                   SelectionMode="Single">
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:NoteItem">
+                <DataTemplate x:DataType="model:NoteItem">
                     <Grid ColumnDefinitions="*, Auto" Padding="20">
                         <Label Text="{Binding Note}" VerticalTextAlignment="Center"/>
                     </Grid>

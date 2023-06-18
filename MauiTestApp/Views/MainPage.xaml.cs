@@ -1,36 +1,37 @@
 ﻿using MauiTestApp.Data;
+using MauiTestApp.Models;
 using MauiTestApp.ViewModels;
-using System.Collections.ObjectModel;
 
 namespace MauiTestApp;
 
 public partial class MainPage : ContentPage
 {
     TestDatabase testDatabase;
-    public ObservableCollection<NoteViewModel> Notes { get; set; } = new();
 
-    public MainPage(TestDatabase testDb)
+    public MainPage(TestDatabase testDb, NoteViewModel noteViewModel)
 	{
 		InitializeComponent();
         testDatabase = testDb;
-        BindingContext = this;
-    }
 
-    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
-    {
-        base.OnNavigatedTo(args);
-        var notes = await testDatabase.GetItemsAsync();
+        var notes = Task.Run(GetNotes);
         MainThread.BeginInvokeOnMainThread(() =>
         {
-            Notes.Clear();
-            foreach (var note in notes)
+            noteViewModel.Notes.Clear();
+            foreach (var note in notes.Result)
             {
-                Notes.Add(new NoteViewModel
+                noteViewModel.Notes.Add(new NoteItem
                 {
                     Id = note.Id,
                     Note = note.Note
                 });
             }
         });
+
+        BindingContext = noteViewModel;
+    }
+
+    private async Task<List<NoteItem>> GetNotes()
+    {
+        return await testDatabase.GetItemsAsync();
     }
 }
