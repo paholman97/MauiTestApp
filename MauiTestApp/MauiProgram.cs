@@ -1,6 +1,8 @@
 ﻿using MauiTestApp.Data;
 using MauiTestApp.Models;
 using Microsoft.Extensions.Logging;
+using MauiTestApp.Services;
+using MauiTestApp.ViewModels;
 
 namespace MauiTestApp;
 
@@ -20,6 +22,10 @@ public static class MauiProgram
 		builder.Services.AddSingleton<NoteItem>();
 		builder.Services.AddTransient<MainPage>();
 		builder.Services.AddTransient<NotePage>();
+
+        builder.Services.AddSingleton<MonkeyService>();
+        builder.Services.AddSingleton<MonkeysViewModel>();
+		builder.Services.AddTransient<Monkeys>();
 
         builder.Services.AddSingleton<TestDatabase>();
 
